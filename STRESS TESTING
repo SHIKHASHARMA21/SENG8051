@@ -1,0 +1,12 @@
+from locust import HttpUser, task, constant
+
+class StressTestUser(HttpUser):
+    wait_time = constant(0.1)
+
+    @task
+    def stress_test(self):
+        self.client.get("/")
+
+if __name__ == "__main__":
+    import os
+    os.system("locust -f stress_test.py --host=http://192.168.33.10")
